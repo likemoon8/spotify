@@ -28,3 +28,42 @@ public:
     int getReleased()const{return released;}
     string getGenre()const{return genre;}
 };
+
+vector<Song*> songs;
+class Singer {
+public:
+    string name;
+    int albumeCount;
+    int songCount;
+    vector<Song*> Ssongs;
+
+    Singer() {
+        cout << "Singer's name: " << endl;
+        cin >> name;
+        cout << "Singer's song count: " << endl;
+        cin >> songCount;
+        cout << "Singer's album count: " << endl;
+        cin >> albumeCount;
+    }
+
+    void songsfinder() {
+        for (int i = 0; i < songs.size(); i++) {
+            if (songs[i]->getName() == name) {
+                 Ssongs.push_back(songs[i]);
+            }
+        }
+    }
+
+    void editname() {
+        cout << "Singer's name: " << endl;
+        cin >> name;
+    }
+    void editalbumcount() {
+        cout << "Singer's song count: " << endl;
+        cin >> songCount;
+    }
+    void editsong() {
+        cout << "Singer's album count: " << endl;
+        cin >> albumeCount;
+    }
+};
