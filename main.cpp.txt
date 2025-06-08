@@ -67,3 +67,99 @@ public:
         cin >> albumeCount;
     }
 };
+void login(vector<Admin*>admins, vector<Singer*>& singers) {
+    while (true) {
+        cout << "welcome! choose: " << endl;
+        cout << "1.Admin\n2.User";
+        int ans;
+        cin >> ans;
+        if (ans == 1) {
+            cout << "your username: ";
+            string username;
+            cin >> username;
+            cout << "your password: ";
+            string password;
+            cin >> password;
+            for (auto a: admins) {
+                if (a->username == username) {
+                    if (a->password == password) {
+                        cout << "choose what you want: " << endl;
+                        cout << "1.add song\n2.add and edit playlist\n3.make page for singer" << endl;
+                        int choice;
+                        cin >> choice;
+                        if (choice == 1) {
+                            a->addSong();
+                        } else if (choice == 2) {
+                            cout << "1.add song\n2.add and edit playlist\n3.make page for singer" << endl;
+                            cin >> choice;
+                            switch (choice) {
+                                case 1:
+                                    a->addPlaylist();
+                                case 2:
+                                    a->addSongToPlaylist();
+                                case 3:
+                                    a->eraseSongfromPlaylist();
+                            }
+                        } else if (choice == 3) {
+                            singers.push_back(new Singer());
+                        }
+                    }
+                }
+            }
+        } else {
+
+        }
+    }
+}
+
+class MusicSystem {
+public:
+    vector<User*> users;
+    vector<playlist*> playlists;
+    vector<Singer*> singers;
+    User* currentUser;
+    vector<Admin*> admins;
+
+    MusicSystem(vector<Admin*>&a) : currentUser(nullptr), admins(a) {}
+};
+
+vector<Song*> filterSongsByArtist(string artistName) {
+    vector<Song*> results;
+    for (auto song : songs) {
+        if (song->getSinger() == artistName) {
+            results.push_back(song);
+        }
+    }
+    return results;
+}
+
+vector<Song*> filterSongsByGenre(string genre) {
+    vector<Song*> results;
+    for (auto song : songs) {
+        if (song->getGenre() == genre) {
+            results.push_back(song);
+        }
+    }
+    return results;
+}
+
+vector<Song*> filterSongsByYear(int year) {
+    vector<Song*> results;
+    for (auto song : songs) {
+        if (song->getReleased() == year) {
+            results.push_back(song);
+        }
+    }
+    return results;
+}
+
+int main() {
+    vector<Admin*> admin;
+    MusicSystem music_system(admin);
+    admin.emplace_back(new Admin("first", "1"));
+    admin.emplace_back(new Admin("second", "2"));
+    admin.emplace_back(new Admin("third", "3"));
+    login(admin, music_system.singers);
+
+    return 0;
+}
