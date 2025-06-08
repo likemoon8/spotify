@@ -30,6 +30,71 @@ public:
 };
 
 vector<Song*> songs;
+class playlist {
+public:
+    string name;
+    vector<Song*> psongs;
+    int playMode;//1.random 2.sequential 3.repeat
+
+    playlist(string n) : name(n), playMode(1) {}
+
+    void add(string name) {
+        for (int i = 0; i < songs.size(); i++) {
+            if (songs[i]->getName() == name) {
+                psongs.push_back(songs[i]);
+            }
+        }
+    }
+
+    void erase(string name) {
+        for (int i = 0; i < songs.size(); i++) {
+            if (songs[i]->getName() == name) {
+                psongs.erase(songs.begin() + i);
+            }
+        }
+    }
+    string getname()const{return name; }
+    int getSongCount() const { return songs.size(); }
+
+    int getNextSong(int& currentIndex) {
+        if (songs.empty()) return 0;
+        if (playMode == 1) {
+            currentIndex = rand() % songs.size();
+        } else if (playMode == 2) {
+            ++currentIndex;
+        }
+        return currentIndex;
+    }
+
+    void playPlaylist() {
+        int choice = 0;
+        int i = 0;
+        srand(time(0));
+        while (true) {
+            //songs[getNextSong(i)]->playSong;
+            cout<<"1.change playmode\t2.next\t3.previous\t4.exit";
+            cin>>choice;
+            if (choice == 1) {
+                cout << "choose:\n1.random\n2.sequential\n3.repeat\n";
+                cin >> playMode;
+            }if (choice == 2) {
+                continue;
+            }if (choice == 3) {
+                if (playMode == 1) {i -= 2;}
+                else {--i;}
+            }if (choice == 4) {
+                break;
+            }
+        }
+
+    }
+
+    void display() {
+        for (auto song: songs) {
+            song->display();
+        }
+    }
+};
 class Singer {
 public:
     string name;
@@ -65,6 +130,64 @@ public:
     void editsong() {
         cout << "Singer's album count: " << endl;
         cin >> albumeCount;
+    }
+};
+class Admin {
+public:
+    string username;
+    string password;
+    static vector<playlist> playlists;
+
+    Admin(string username, string password) : username(username), password(password) {
+    }
+
+    void addSong() {
+        string name, singer, genre;
+        int realised;
+        cout << "name: ";
+        cin >> name;
+        cout << "singer: ";
+        cin >> singer;
+        cout << "realised: ";
+        cin >> realised;
+        cout << "genre: ";
+        cin >> genre;
+        Song newsong(name, singer, realised, genre);
+    }
+
+    void addPlaylist() {
+        cout << "name: ";
+        string name;
+        cin >> name;
+        playlists.emplace_back(name);
+    }
+
+    void addSongToPlaylist() {
+        cout << "playlist name: ";
+        string pname;
+        cin >> pname;
+        cout << "song name: ";
+        string sname;
+        cin >> sname;
+        for (auto playlist: playlists) {
+            if (playlist.name == pname) {
+                playlist.add(pname);
+            }
+        }
+    }
+
+    void eraseSongfromPlaylist() {
+        cout << "playlist name: ";
+        string pname;
+        cin >> pname;
+        cout << "song name: ";
+        string sname;
+        cin >> sname;
+        for (auto playlist: playlists) {
+            if (playlist.name == pname) {
+                playlist.erase(pname);
+            }
+        }
     }
 };
 void login(vector<Admin*>admins, vector<Singer*>& singers) {
