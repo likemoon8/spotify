@@ -1,0 +1,30 @@
+#include <iostream>
+#include <vector>
+#include <stdlib.h>
+#include <ctime>
+using namespace std;
+
+class Song {
+    string name;
+    string singer;
+    int released;
+    string genre;
+public:
+    Song(string n, string s, int r, string g): name(n), singer(s), released(r), genre(g) {
+    }
+
+    void playSong() {
+        cout << "-------"<<name<<"-------" << endl;
+        cout <<singer << endl;
+    }
+
+    void display() {
+        cout << "name: " << name << " singer: " << singer <<
+            "realised: "<<released<< " genre:"<<genre<< endl;
+    }
+
+    string getName()const{return name;}
+    string getSinger()const{return singer;}
+    int getReleased()const{return released;}
+    string getGenre()const{return genre;}
+};
