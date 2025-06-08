@@ -190,6 +190,15 @@ public:
         }
     }
 };
+
+class User {
+public:
+    string username;
+    string password;
+
+    User(string username, string password) {}
+};
+
 void login(vector<Admin*>admins, vector<Singer*>& singers) {
     while (true) {
         cout << "welcome! choose: " << endl;
